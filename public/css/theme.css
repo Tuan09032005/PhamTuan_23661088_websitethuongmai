@@ -1,0 +1,61 @@
+:root{
+  --primary: #0ea5a4; /* teal */
+  --primary-dark: #0b9a92;
+  --accent: #fb923c; /* orange */
+  --muted: #6b7280;
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --footer-bg: #062b2a;
+  --footer-text: #e6f6f5;
+}
+
+/* NAVBAR */
+.navbar-custom{
+  background: linear-gradient(90deg, var(--primary), var(--primary-dark)) !important;
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+}
+.navbar-custom .nav-link{ color: rgba(255,255,255,0.95) !important; }
+.navbar-custom .nav-link:hover, .navbar-custom .nav-link.active{ color: var(--accent) !important; transform: translateY(-2px); }
+
+/* Dropdown tweaks */
+.navbar .dropdown-menu{ box-shadow: 0 8px 24px rgba(2,6,23,0.08); border-radius:8px; }
+
+/* Buttons */
+.btn-primary{
+  background: linear-gradient(90deg, var(--primary), var(--accent)) !important;
+  border-color: transparent !important;
+  color: #fff !important;
+}
+.btn-outline-primary{
+  color: var(--primary) !important;
+  border-color: var(--primary) !important;
+}
+
+/* Links and headings */
+a{ color: var(--primary); }
+a.text-white{ color: #fff !important; }
+h1,h2,h3,h4,h5{ color: #0f172a; }
+
+/* Footer overrides (override inline styles) */
+footer{ background: var(--footer-bg) !important; color: var(--footer-text) !important; }
+footer h5{ color: var(--accent) !important; }
+footer a{ color: rgba(255,255,255,0.9) !important; }
+footer small a{ color: rgba(255,255,255,0.8) !important; }
+footer p span{ color: var(--accent) !important; }
+
+/* Cards */
+.card{ background: var(--card) !important; }
+
+/* Forms */
+.form-control:focus{ box-shadow: 0 6px 18px rgba(14,165,164,0.12) !important; border-color: var(--primary) !important; }
+
+/* Utility */
+.text-primary{ color: var(--primary) !important; }
+.text-muted{ color: var(--muted) !important; }
+
+/* Small responsive tweaks */
+@media (max-width: 576px){
+  .navbar-brand{ font-size: 1.1rem !important; }
+}
