@@ -1,9 +1,9 @@
 :root{
-  --admin-bg: #f3f6f9;
+  --admin-bg: #f4f6f8; /* match site bg */
   --card-bg: #ffffff;
   --admin-border: rgba(15,23,42,0.06);
-  --admin-accent: var(--primary, #0ea5a4);
-  --admin-accent-2: var(--accent, #fb923c);
+  --admin-accent: var(--primary, #3b82f6);
+  --admin-accent-2: var(--primary-dark, #2563eb);
   --muted: #6b7280;
 }
 
@@ -27,7 +27,7 @@
 
 /* Buttons */
 .btn-admin{ border-radius:10px; padding:8px 14px; font-weight:600; }
-.btn-admin-primary{ background:linear-gradient(90deg,var(--admin-accent),var(--admin-accent-2)); border:none; color:#fff; }
+.btn-admin-primary{ background:var(--admin-accent); border:none; color:#fff; }
 .btn-admin-outline{ border:1px solid rgba(15,23,42,0.08); color:#0f172a; background:transparent; }
 
 /* Toolbar */

@@ -1,14 +1,14 @@
-<footer style="background:#0f172a; color:white; padding:50px 0; margin-top:60px;">
+<footer class="site-footer">
   <div class="container">
     <div class="row">
 
       <div class="col-md-4 mb-4">
-        <h5 style="color:#7c3aed;">MyStore</h5>
+        <h5>MyStore</h5>
         <p>Cửa hàng điện thoại chính hãng – uy tín – giá tốt.</p>
       </div>
 
       <div class="col-md-4 mb-4">
-        <h5 style="color:#7c3aed;">Liên kết</h5>
+        <h5>Liên kết</h5>
         <ul style="list-style:none; padding-left:0;">
           <li><a href="/home" class="text-white text-decoration-none">Home</a></li>
           <li><a href="/admin/danh-sach-san-pham" class="text-white text-decoration-none">Quản lí sản phẩm</a></li>
@@ -18,9 +18,9 @@
       </div>
 
       <div class="col-md-4 mb-4">
-        <h5 style="color:#7c3aed;">Liên hệ</h5>
-        <p>Email: <span style="color:#fb923c;">support@mystore.com</span></p>
-        <p>Hotline: <span style="color:#fb923c;">0123 456 789</span></p>
+        <h5>Liên hệ</h5>
+        <p>Email: <span class="text-primary">support@mystore.com</span></p>
+        <p>Hotline: <span class="text-primary">0123 456 789</span></p>
         <div style="margin-top:12px;">
           <div style="width:100%; height:180px; overflow:hidden; border-radius:8px;">
             <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=106.6000%2C10.7900%2C106.6600%2C10.8500&amp;layer=mapnik&amp;marker=10.8231%2C106.6297" style="border:0; width:100%; height:100%;" loading="lazy"></iframe>
@@ -39,3 +39,21 @@
 
   </div>
 </footer>
+
+<script>
+  // Intersection Observer to add 'in-view' class when elements scroll into view
+  (function(){
+    if (!('IntersectionObserver' in window)) return;
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if (e.isIntersecting) {
+          e.target.classList.add('in-view');
+          // If you want to animate only once, unobserve
+          io.unobserve(e.target);
+        }
+      });
+    }, {root:null, rootMargin:'0px 0px -6% 0px', threshold: 0.06});
+
+    document.querySelectorAll('.animate-item, .animate-fade-up, .animate-fade-in').forEach(el=> io.observe(el));
+  })();
+</script>

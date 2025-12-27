@@ -4,12 +4,12 @@
   <div class="container my-5">
     <div class="row g-4">
       <div class="col-md-6">
-        <div class="card border-0 shadow-sm">
+        <div class="card border-0 shadow-sm animate-item">
           <img src="{{ asset($product->product_img) }}" class="img-fluid" alt="{{ $product->product_name }}" style="border-radius:8px; object-fit:cover; width:100%; height:420px;">
         </div>
       </div>
 
-      <div class="col-md-6">
+      <div class="col-md-6 animate-item">
         <h2 class="fw-bold" style="color:#0f172a;">{{ $product->product_name }}</h2>
         <div class="mb-2 text-muted">Danh mục: {{ $product->category_name }}</div>
         <h3 class="text-danger fw-bold">{{ number_format($product->product_price,0) }}₫</h3>
@@ -17,8 +17,16 @@
         <p class="mt-4" style="white-space:pre-line;">{{ $product->product_description }}</p>
 
         <div class="d-flex gap-2 mt-4">
-          <a href="#" class="btn btn-lg btn-primary">Thêm vào giỏ</a>
-          <a href="#" class="btn btn-lg btn-outline-secondary">Mua ngay</a>
+          <form method="POST" action="{{ route('cart.add', $product->product_id) }}">
+            @csrf
+            <button type="submit" class="btn btn-lg btn-primary">Thêm vào giỏ</button>
+          </form>
+
+          <form method="POST" action="{{ route('cart.add', $product->product_id) }}">
+            @csrf
+            <input type="hidden" name="redirect" value="checkout">
+            <button type="submit" class="btn btn-lg btn-outline-secondary">Mua ngay</button>
+          </form>
         </div>
 
         <hr class="my-4">

@@ -2,17 +2,70 @@
 
 <body style="background-color:var(--bg);">
 
-<!-- Hero Section -->
-<div class="hero-section text-white text-center p-5" style="background-image: url('https://cdn.britannica.com/84/203584-050-57D326E5/speed-internet-technology-background.jpg');">
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <h1 class="display-4 fw-bold">Chào mừng đến với MyStore</h1>
-    <p class="lead mb-4">Điện thoại chính hãng – Giá tốt – Giao nhanh trong ngày</p>
-    <a href="#products" class="btn btn-primary btn-lg">
-      <i class="bi bi-shop"></i> Xem sản phẩm
-    </a>
+<!-- Hero Section (new layout) -->
+<section class="hero-section py-5">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 order-2 order-lg-1 animate-fade-up">
+        <div class="px-3 px-lg-0">
+          <h1 class="display-5 fw-bold mb-3" style="color:var(--primary);">MyStore — Chất lượng &amp; Tin cậy</h1>
+          <p class="lead text-muted mb-4">Chọn điện thoại phù hợp với bạn. Ưu đãi mỗi ngày, giao nhanh trong nội thành và bảo hành chính hãng.</p>
+
+          <div class="d-flex gap-2 mb-3">
+            <a href="#products" class="btn btn-primary btn-lg">Xem sản phẩm</a>
+            <a href="/lien-he" class="btn btn-outline-primary btn-lg">Liên hệ</a>
+          </div>
+
+          <div class="d-flex flex-wrap gap-3 mt-3 small text-muted">
+            <div class="d-flex align-items-center gap-2">
+              <span class="badge bg-light text-primary p-2 rounded-circle"><i class="bi bi-truck"></i></span>
+              <div>Giao hàng nhanh</div>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <span class="badge bg-light text-primary p-2 rounded-circle"><i class="bi bi-shield-check"></i></span>
+              <div>Bảo hành chính hãng</div>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <span class="badge bg-light text-primary p-2 rounded-circle"><i class="bi bi-cash-stack"></i></span>
+              <div>Giá cạnh tranh</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 order-1 order-lg-2 mb-4 mb-lg-0 animate-item">
+        <div class="hero-showcase d-flex justify-content-center align-items-center position-relative">
+          <div class="showcase-card shadow-lg rounded-4 p-4 bg-white border" style="border-color: rgba(15,23,42,0.04);">
+            <div class="d-flex gap-4 align-items-center">
+              <img src="{{ asset($products[0]->product_img ?? '/img/download.jfif') }}" alt="p1" class="showcase-main-img">
+              <div>
+                <div class="fw-semibold fs-5">{{ $products[0]->product_name ?? 'Sản phẩm A' }}</div>
+                <div class="text-danger fw-bold fs-5">{{ number_format($products[0]->product_price ?? 0,0,',','.') }}₫</div>
+                <div class="mt-2">
+                  <a href="{{ url('products/'.($products[0]->product_id ?? '#')) }}" class="btn btn-outline-primary btn-sm me-2">Chi tiết</a>
+                  <form method="POST" action="{{ route('cart.add', $products[0]->product_id ?? 0) }}" style="display:inline">
+                    @csrf
+                    <button class="btn btn-primary btn-sm">Mua ngay</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="showcase-floating" aria-hidden="true">
+            <div class="floating-thumb shadow rounded-4"><img src="{{ asset($products[1]->product_img ?? '/img/download.jfif') }}" alt="p2" class="floating-img"></div>
+            <div class="floating-thumb shadow rounded-4"><img src="{{ asset($products[2]->product_img ?? '/img/download.jfif') }}" alt="p3" class="floating-img"></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+
+  <!-- SVG wave divider -->
+  <div class="hero-divider" aria-hidden="true">
+    <svg viewBox="0 0 1200 100" preserveAspectRatio="none" style="width:100%; height:70px; display:block;"><path d="M0,0 C300,100 900,0 1200,80 L1200,100 L0,100 Z" fill="var(--bg)"></path></svg>
+  </div>
+</section>
 
 <!-- Danh mục -->
 <div class="container mt-4">
@@ -82,21 +135,22 @@
 
 <style>
 /* Home page overrides (uses theme variables from theme.css) */
-.hero-section{
-  background-position:center;
-  background-size:cover;
-  border-radius:12px;
-  box-shadow: 0 8px 30px rgba(2,6,23,0.08);
-  position:relative;
-  overflow:hidden;
-}
-.hero-overlay{
-  position:absolute; inset:0; background:linear-gradient(180deg, rgba(2,6,23,0.45), rgba(2,6,23,0.25));
-}
-.hero-content{ position:relative; z-index:2; }
-.hero-content h1{ color: #fff; text-shadow:0 6px 24px rgba(2,6,23,0.5); }
-.hero-content p{ color: rgba(255,255,255,0.9); }
+.hero-section{ background: linear-gradient(180deg, rgba(59,130,246,0.06), rgba(99,102,241,0.02)); border-radius:12px; position:relative; overflow:visible; }
+.hero-section .container{ position:relative; z-index:2; }
+.hero-showcase{ min-height:220px; }
+.showcase-card{ width:420px; max-width:86%; transform: translateY(0); transition: transform .48s cubic-bezier(.22,.9,.21,1); }
+.showcase-main-img{ width:160px; height:160px; object-fit:cover; border-radius:14px; }
+.showcase-card img{ border-radius:12px; }
+.showcase-floating{ position:absolute; right:6%; top:6%; display:flex; gap:14px; flex-direction:column; }
+.floating-thumb{ width:120px; height:120px; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+.floating-img{ width:100%; height:100%; object-fit:cover; border-radius:10px; }
 
+/* subtle parallax-like motion on hover */
+.hero-showcase:hover .showcase-card{ transform: translateY(-10px) translateX(6px); box-shadow:0 28px 60px rgba(2,6,23,0.12); }
+.hero-showcase:hover .floating-thumb:first-child{ transform: translateY(-18px) translateX(-10px) rotate(-4deg); }
+.hero-showcase:hover .floating-thumb:last-child{ transform: translateY(14px) translateX(10px) rotate(4deg); }
+
+/* Keep product card behavior consistent */
 .product-card{ transition: transform .25s ease, box-shadow .25s ease; position:relative; overflow:hidden; }
 .product-card:hover{ transform: translateY(-6px); box-shadow:0 18px 40px rgba(2,6,23,0.08); }
 .ribbon{ position:absolute; top:10px; left:-12px; background:#ef4444; color:#fff; padding:6px 22px; transform:rotate(-15deg); font-size:13px; z-index:3; border-radius:4px; }
@@ -104,10 +158,16 @@
 
 .text-primary{ color: var(--primary) !important; }
 
-/* small responsive adjustments */
+/* Responsive adjustments */
+@media(max-width:991px){
+  .showcase-floating{ position:static; flex-direction:row; gap:10px; margin-top:14px; justify-content:center; }
+  .showcase-card{ width:100%; }
+}
+
 @media(max-width:575px){
-  .hero-content h1{ font-size:1.6rem; }
+  .hero-section{ padding:1.5rem 0; }
   .product-thumb{ height:160px; }
+  .hero-showcase{ min-height:180px; }
 }
 
 </style>

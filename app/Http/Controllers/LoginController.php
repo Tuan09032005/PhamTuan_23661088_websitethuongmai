@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -25,20 +26,24 @@ class LoginController extends Controller
             'username.required' => 'Vui lòng nhập tên đăng nhập',
             'password.required' => 'Vui lòng nhập mật khẩu',
         ]);
-        $user = User::where('user_username', $request->username)
-                    ->where('user_password', $request->password)
-                    ->first();
+        $user = User::where('user_username', $request->username)->first();
 
-        if ($user) {
+        if ($user && $request->password == $user->user_password) {
             // Lưu thông tin vào session
             Session::put('user_id', $user->user_id);
             Session::put('user_fullname', $user->user_fullname);
             Session::put('logged_in', true);
 
-            // Dùng push để lưu roles
-            Session::push('roles', $user->user_role ?? 'user');
+            // Lưu vai trò người dùng để kiểm tra quyền
+            $role = $user->user_role ?? 0;
+            Session::put('user_role', $role);
+            Session::put('roles', $role);
 
-            return redirect('/admin/danh-sach-nguoi-dung')->with('success', 'Đăng nhập thành công!');
+            if ($role == 1) {
+                return redirect('/admin/danh-sach-nguoi-dung')->with('success', 'Đăng nhập thành công!');
+            }
+
+            return redirect('/')->with('success', 'Đăng nhập thành công!');
         }
 
         return back()->with('error', 'Sai tên đăng nhập hoặc mật khẩu!');
@@ -51,7 +56,41 @@ class LoginController extends Controller
         Session::forget('user_fullname');
         Session::forget('logged_in');
         Session::forget('roles');
+        Session::forget('user_role');
 
         return redirect('/admin/login')->with('success', 'Đăng xuất thành công!');
+    }
+
+    // Hiển thị form đăng ký (public)
+    public function showRegister()
+    {
+        return view('register');
+    }
+
+    // Xử lý đăng ký
+    public function register(Request $request)
+    {
+        $request->validate([
+            'user_username' => 'required|unique:user,user_username',
+            'user_password' => 'required|min:4',
+            'user_fullname' => 'required'
+        ], [
+            'user_username.required' => 'Vui lòng nhập tên đăng nhập',
+            'user_username.unique' => 'Tên đăng nhập đã tồn tại',
+            'user_password.required' => 'Vui lòng nhập mật khẩu',
+            'user_fullname.required' => 'Vui lòng nhập họ và tên',
+        ]);
+
+        $data = [
+            'user_username' => $request->input('user_username'),
+            'user_password' => $request->input('user_password'),
+            'user_fullname' => $request->input('user_fullname'),
+            'user_address'  => $request->input('user_address'),
+            'user_role'     => 0,
+        ];
+
+        User::create($data);
+
+        return redirect('/admin/login')->with('success', 'Đăng ký thành công! Vui lòng đăng nhập.');
     }
 }

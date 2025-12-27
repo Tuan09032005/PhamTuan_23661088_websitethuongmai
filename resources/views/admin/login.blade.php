@@ -108,6 +108,10 @@
 
             <button type="submit" class="btn btn-login w-100">Đăng nhập</button>
         </form>
+
+            <div class="text-center mt-3 small">
+                Bạn không có tài khoản? <a href="{{ url('/register') }}">Đăng ký ngay</a>
+            </div>
     </div>
 </body>
 

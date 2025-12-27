@@ -26,7 +26,7 @@
     <div class="row g-4">
       @foreach($products as $product)
       <div class="col-lg-3 col-md-4 col-sm-6">
-        <div class="card h-100 shadow-sm border-0 rounded-4 product-card" style="overflow:hidden;">
+        <div class="card h-100 shadow-sm border-0 rounded-4 product-card animate-item" style="overflow:hidden;">
           <a href="{{ url('products/'.$product->product_id) }}">
             <img src="{{ asset($product->product_img) }}" class="card-img-top p-3" alt="{{ $product->product_name }}" style="border-radius:12px; height:200px; object-fit:cover; width:100%;">
           </a>
@@ -35,7 +35,10 @@
             <p class="text-danger fw-bold mb-2">{{ number_format($product->product_price,0) }}₫</p>
             <div class="d-flex justify-content-center gap-2">
               <a href="{{ url('products/'.$product->product_id) }}" class="btn btn-outline-primary btn-sm">Chi tiết</a>
-              <a href="#" class="btn btn-success btn-sm">Mua ngay</a>
+              <form method="POST" action="{{ route('cart.add', $product->product_id) }}" style="display:inline-block;">
+                @csrf
+                <button type="submit" class="btn btn-success btn-sm">Thêm vào giỏ</button>
+              </form>
             </div>
           </div>
         </div>

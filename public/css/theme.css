@@ -1,12 +1,13 @@
 :root{
-  --primary: #0ea5a4; /* teal */
-  --primary-dark: #0b9a92;
-  --accent: #fb923c; /* orange */
-  --muted: #6b7280;
-  --bg: #f8fafc;
+  /* Simple neutral + blue accent palette */
+  --primary: #3b82f6; /* blue-500 */
+  --primary-dark: #2563eb; /* blue-600 */
+  --accent: #64748b; /* slate-500 (muted) */
+  --muted: #6b7280; /* muted gray */
+  --bg: #f4f6f8; /* very light gray background */
   --card: #ffffff;
-  --footer-bg: #062b2a;
-  --footer-text: #e6f6f5;
+  --footer-bg: #0f172a; /* dark slate for footer */
+  --footer-text: #f8fafc;
 }
 
 /* NAVBAR */
@@ -24,7 +25,7 @@
 
 /* Buttons */
 .btn-primary{
-  background: linear-gradient(90deg, var(--primary), var(--accent)) !important;
+  background: var(--primary) !important;
   border-color: transparent !important;
   color: #fff !important;
 }
@@ -59,3 +60,42 @@ footer p span{ color: var(--accent) !important; }
 @media (max-width: 576px){
   .navbar-brand{ font-size: 1.1rem !important; }
 }
+
+/* Global subtle transitions and motion */
+html { scroll-behavior: smooth; }
+body { background-color: var(--bg); }
+
+/* Apply subtle transitions to interactive elements */
+a, button, .card, .list-group-item, input, .btn {
+  transition: transform .18s cubic-bezier(.2,.9,.2,1), box-shadow .18s ease, opacity .18s ease, background-color .18s ease, color .12s ease;
+}
+
+/* Card hover lift */
+.card:hover, .product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(15,23,42,0.08);
+}
+
+/* Product card default state for animations */
+.animate-item { opacity: 0; transform: translateY(12px); will-change: transform, opacity; }
+.animate-item.in-view { opacity: 1; transform: translateY(0); transition: opacity .52s cubic-bezier(.22,.9,.21,1), transform .52s cubic-bezier(.22,.9,.21,1); }
+
+/* Fade up and fade in helpers */
+.animate-fade-up { opacity: 0; transform: translateY(10px); }
+.animate-fade-up.in-view { opacity: 1; transform: translateY(0); transition: all .5s cubic-bezier(.22,.9,.21,1); }
+.animate-fade-in { opacity: 0; }
+.animate-fade-in.in-view { opacity: 1; transition: opacity .6s ease; }
+
+/* Button micro-interaction */
+.btn:active { transform: translateY(1px) scale(.998); }
+
+/* Utility: subtle shimmer for loading placeholder */
+.skeleton { background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.06), rgba(255,255,255,0.02)); animation: shimmer 1.2s linear infinite; }
+@keyframes shimmer { 0% { background-position: -200px 0; } 100% { background-position: 200px 0; } }
+
+/* Footer styles using variables */
+footer.site-footer { background: var(--footer-bg); color: var(--footer-text); padding:50px 0; margin-top:60px; }
+footer.site-footer h5 { color: var(--primary) !important; }
+footer.site-footer a { color: rgba(255,255,255,0.9); text-decoration:none; }
+footer.site-footer small a { color: rgba(255,255,255,0.8); }
+
